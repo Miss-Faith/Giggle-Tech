@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 django = "*"
+cloudinary = "*"
+django-registration = "*"
 
 [dev-packages]
 
