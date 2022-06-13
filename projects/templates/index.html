@@ -1,5 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Helloooooo</h1>
+<div class="text-center container-fluid banner">
+  <br><br><br><br><br>
+  <form class="form mr-sm-2" action='/search' role="search">
+    <input class="form-control mr-2 text-center" type="search" placeholder="Search by Project Name" name="imagesearch" aria-label="Search">
+    <br>
+    <button class="form-button text-center btn btn-info btn-sm my-2 my-sm-0" type="submit">Search</button>
+  </form>
+  <br>
+  <a class="btn btn-info" href="/">Add New Project</a>
+</div>
+
+  <div>
+
+  </div>
 {% endblock %}
