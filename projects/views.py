@@ -73,7 +73,7 @@ def user_profile(request, username):
     params = {
         'user_prof': user_prof,
     }
-    return render(request, 'userprofile.html', params)
+    return render(request, 'profile.html', params)
 
 
 @login_required(login_url='login')
@@ -146,13 +146,13 @@ def search_project(request):
     if request.method == 'GET':
         title = request.GET.get("title")
         results = Post.objects.filter(title__icontains=title).all()
-        print(results)
+        
         message = f'name'
         params = {
             'results': results,
             'message': message
         }
-        return render(request, 'results.html', params)
+        return render(request, 'search.html', params)
     else:
         message = "You haven't searched for any image category"
-    return render(request, 'results.html', {'message': message})
+    return render(request, 'search.html', {'message': message})
