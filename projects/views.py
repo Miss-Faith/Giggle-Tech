@@ -43,8 +43,8 @@ def search_results(request):
     return render(request, 'search.html', {'message': message})
 
 @login_required()
-def project(request, post.id):
-    post = Post.objects.get(id=post.id)
+def project(request, post_id):
+    post = Post.objects.get(id=post_id)
     ratings = Rating.objects.filter(user=request.user, post=post).first()
     rating_status = None
     if ratings is None:
