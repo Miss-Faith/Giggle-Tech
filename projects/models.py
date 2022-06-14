@@ -53,8 +53,8 @@ class Post(models.Model):
       self.delete()
 
   @classmethod
-    def all_posts(cls):
-        return cls.objects.all()
+  def all_posts(cls):
+      return cls.objects.all()
 
 class Rating(models.Model):
   rating = (
