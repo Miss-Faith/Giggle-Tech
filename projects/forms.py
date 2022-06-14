@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.forms import ClearableFileInput
 
+from cloudinary.models import CloudinaryField
+
 def ForbiddenUsers(value):
   forbidden_users = ['admin', 'css', 'js', 'authenticate', 'login', 'logout', 'administrator', 'root',
   'email', 'user', 'join', 'sql', 'static', 'python', 'delete']
@@ -52,16 +54,14 @@ class SignupForm(forms.ModelForm):
 
 class NewPostForm(forms.ModelForm):
   name = forms.CharField(label='',widget=forms.TextInput(attrs={'placeholder': 'Project Name','class': 'input is-medium'}), required=True)
-  image = CloudinaryField('image',widget=forms.ClearableFileInput(attrs={'placeholder': 'Upload Image'}), required=False)
+  image = CloudinaryField('image')
   description = forms.CharField(label='',widget=forms.Textarea(attrs={'placeholder': 'Share Description','class': 'input is-medium'}), required=True)
 
   class Meta:
     model = Post
     fields = ('name', 'image', 'description')
 
-class CommentForm(forms.ModelForm):
-  body = forms.CharField(label='',widget=forms.Textarea(attrs={'class': 'textarea'}), required=True)
-
-  class Meta:
-    model = Comment
-    fields = ('body',)
+class RatingsForm(forms.ModelForm):
+    class Meta:
+        model = Rating
+        fields = ['design', 'usability', 'content']
