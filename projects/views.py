@@ -7,7 +7,7 @@ from django.template import loader
 import random
 
 from rest_framework import viewsets
-from .serializers import ProfileSerializer, UserSerializer, PostSerializer
+from .serializer import *
 
 # Create your views here.
 def index(request):
@@ -18,14 +18,13 @@ def index(request):
             post.user = request.user
             post.save()
     else:
-        form = PostForm()
+        form = NewPostForm()
 
     try:
-        posts = Post.objects.all()
-        posts = posts[::-1]
+        posts = Post.objects.all().order_by('-posted')
         a_post = random.randint(0, len(posts)-1)
         random_post = posts[a_post]
-        print(random_post.photo)
+        print(random_post.image)
     except Post.DoesNotExist:
         posts = None
     return render(request, 'index.html', {'posts': posts, 'form': form, 'random_post': random_post})

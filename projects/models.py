@@ -36,7 +36,7 @@ class Profile(models.Model):
 class Post(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   title = models.CharField(max_length=120, null=True, blank=False)
-  url = models.URLField(max_length=255)
+  url = models.URLField(max_length=255, null=True, blank=False)
   image = CloudinaryField('image')
   technologies = models.CharField(max_length=200, blank=True)
   description = models.TextField(max_length=1200, blank=False, verbose_name='Description')
