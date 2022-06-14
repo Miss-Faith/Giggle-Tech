@@ -9,6 +9,7 @@ cloudinary = "*"
 django-registration = "*"
 python-decouple = "*"
 django-crispy-forms = "*"
+djangorestframework = "*"
 
 [dev-packages]
 

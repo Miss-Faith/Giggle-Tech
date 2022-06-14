@@ -6,45 +6,99 @@ from .forms import *
 from django.template import loader
 import random
 
+from rest_framework import viewsets
+from .serializers import ProfileSerializer, UserSerializer, PostSerializer
+
 # Create your views here.
-def index(request): 
-  posts = Post.objects.all().order_by('-posted')
-  #   a_post = random.randint(0, len(posts)-1)	
-  #   random_post = posts[a_post]
-
-  if request.method == "POST":
-      form = NewPostForm(request.POST)
-      if form.is_valid():
-          post = form.save(commit=False)
-          post.user = request.user
-          post.save()
-  else:
-      form = NewPostForm()
-
-  template = loader.get_template('index.html')
-  context = {
-    'posts': posts,
-    'form':form,
-    # 'random_post':random_post
-  }
-
-  return HttpResponse(template.render(context, request))
-
-  return render(request, 'index.html')
-
-def search_results(request):
-    if request.method == 'GET':
-        search_term = request.GET.get("project")
-        searched_projects = Post.search_project(search_term)
-        message = f"{search_term}"
-        return render(request, 'search.html', {"message":message,"projects": searched_projects})
+def index(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
     else:
-        message = "You haven't searched for any project"
-    return render(request, 'search.html', {'message': message})
+        form = PostForm()
 
-@login_required()
-def project(request, post_id):
-    post = Post.objects.get(id=post_id)
+    try:
+        posts = Post.objects.all()
+        posts = posts[::-1]
+        a_post = random.randint(0, len(posts)-1)
+        random_post = posts[a_post]
+        print(random_post.photo)
+    except Post.DoesNotExist:
+        posts = None
+    return render(request, 'index.html', {'posts': posts, 'form': form, 'random_post': random_post})
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('index')
+    else:
+        form = SignupForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
+
+@login_required(login_url='login')
+def profile(request, username):
+    return render(request, 'profile.html')
+
+
+def user_profile(request, username):
+    user_prof = get_object_or_404(User, username=username)
+    if request.user == user_prof:
+        return redirect('profile', username=request.user.username)
+    params = {
+        'user_prof': user_prof,
+    }
+    return render(request, 'userprofile.html', params)
+
+
+@login_required(login_url='login')
+def edit_profile(request, username):
+    user = User.objects.get(username=username)
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        prof_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and prof_form.is_valid():
+            user_form.save()
+            prof_form.save()
+            return redirect('profile', user.username)
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        prof_form = UpdateUserProfileForm(instance=request.user.profile)
+    params = {
+        'user_form': user_form,
+        'prof_form': prof_form
+    }
+    return render(request, 'edit.html', params)
+
+
+@login_required(login_url='login')
+def project(request, post):
+    post = Post.objects.get(title=post)
     ratings = Rating.objects.filter(user=request.user, post=post).first()
     rating_status = None
     if ratings is None:
@@ -87,3 +141,18 @@ def project(request, post_id):
     }
     return render(request, 'project.html', params)
 
+
+def search_project(request):
+    if request.method == 'GET':
+        title = request.GET.get("title")
+        results = Post.objects.filter(title__icontains=title).all()
+        print(results)
+        message = f'name'
+        params = {
+            'results': results,
+            'message': message
+        }
+        return render(request, 'results.html', params)
+    else:
+        message = "You haven't searched for any image category"
+    return render(request, 'results.html', {'message': message})
