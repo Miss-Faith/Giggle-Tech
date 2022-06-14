@@ -12,3 +12,7 @@
   background-size:cover;
   min-height: 300px;
 }
+
+.box-content {
+  background-image:url('/static/images/download.jpeg');
+}
