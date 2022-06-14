@@ -1,68 +1,34 @@
-{%extends 'base.html'%}
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-
-<div class="text-center container-fluid banner">
-  <br><br><br>
-  <h6 class="form-text1" id="description">Search for an image.</h6>
-  <form class="form mr-sm-2" action='/search' role="search">
-    <input class="form-control mr-2 text-center" type="search" placeholder="Search by Category" name="imagesearch" aria-label="Search">
-    <small class="form-small">Trending searches: Food, </small>
-    <br>
-    <button class="form-button text-center btn btn-info btn-md my-2 my-sm-0" type="submit">Search</button>
-  </form>
+<div class="container">
+  <div class="row text-center">
+    {% if posts%}
+      <h2>Found {{ posts|length }} projects with searched term '{{message}}'</h2>
+    {% else %}
+      <h2> Found 0 projects for the search term {{message}}</h2>
+    {% endif %}
+  </div>
 </div>
-<br>
-
-<div class="container wrap">
-    <!-- Looping through images -->
-    <div class="row d-flex justify-content-around align-items-center">
-    {% for image in images %}
-        <!-- displaying images -->
-        <div class="card1 col-xs-6 col-sm-6 col-md-4 col-lg-3" data-toggle="modal" data-target="#{{image.id}}">
-            <a class="img-overlay" data-toggle="modal" data-target="#{{image.id}}" style="width:100%"></a>
-            <img src="{{image.image.url}}" href="" alt="{{image.name}}" class="card-img" >
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      {% if posts %}
+      {% for post in posts %}
+      <div class="card">          
+        {% if profile.picture %}
+          <span><img class="rounded-circle" src="{{ profile.picture.url }}" style="width: 6rem; height: 6rem;"></span>
+        {% else %}
+          <span><img class="rounded-circle" src="{% static 'images/noimage.jpg'%}" alt="No Project" style="width: 4rem; height: 4rem;"></span> 
+        {% endif %}
+        <div class="card-body">
+          <h2>{{ post.user.username }}</h2>
+          <p>{{ post.user.email }}</p>
         </div>
-    {% empty %}
-    </div>
-    <div class="row d-flex justify-content-center">
-        <div class="col-sm-6 col-md-6 col-lg-6">
-            <img src="{% static 'images/no-image.jpg' %}" alt="Ooooops" class = "card-img">
-        </div>
-        <div class="card1 col-sm-6 col-md-6 col-lg-6">
-            <h2 class="text-center"> Sorry no image for {{message}} category. We will upload more images soon.</h2>
-        </div>
-    </div>
-    {% endfor %}
-
-    <!-- looping through image details modal class -->
-  {% for image in images %}
-  <div class="modal fade" id="{{image.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content modal-card">
-        <div class="modal-header">
-          <h5 class="modal-title text-center" id="deleteModalLabel">{{image.name}}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <img src="{{image.image.url}}" alt="{{image.name}}" class="img-fluid">
-          <h6 class="imgdesc text-center">Description</h6>
-          <p class="imgdesc text-center">{{image.description}}</p>
-          <p class="">Category :{{image.category}}</p> 
-          <p>Location: <a href="/location/{{image.location}}">{{image.location}}</a></p>
-        </div>
-        <div class="modal-footer">
-          <input class="form-control input-lg" type="text" value="{{image.image.url}}" id="{{image.id}}.url">
-          <button type="button" class="btn btn-sm btn-secondary" onclick="copy('img{{image.id}}')">Copy Link</button>
-          <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-        </div>
+      </div><br>
+      {% endfor %}
       </div>
-    </div>
-  </div>    
-  {% endfor %}
+  </div>
 </div>
-
+{% endif %}
 {% endblock %}
