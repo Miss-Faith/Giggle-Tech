@@ -2,7 +2,13 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar bg-dark">
   <div class="container-fluid">
     {% if user.is_authenticated %}
-      <a class="navbar-brand"><img class="rounded" href="{% url 'profile' user.username %}" src="" alt="Profile" style="max-width: 5rem; max-height: 3rem;"></a>
+      {% if user.profile.picture.url %}
+        <a class="navbar-brand"><img class="rounded" href="{% url 'profile' user.username %}" src="{{ user.profile.picture.url }}" alt="Profile" style="max-width: 5rem; max-height: 3rem;"></a>
+        <span class="text-white" style="margin-left: -36%;">{{ user.profile.user.username }}</span>
+      {% else %}
+        <a class="navbar-brand"><img class="rounded" href="{% url 'profile' user.username %}" src="{% static 'images/noimage.jpg'%}" alt="picture" style="max-width: 5rem; max-height: 3rem;"></a>
+        <span class="text-white" style="margin-left: -36%;">{{ user.profile.user.username }}</span>
+      {% endif %}
       <a href="{% url 'index' %}" class="navbar-brand">Giggle</a>
       <a href="{% url 'logout' %}" class="navbar-item">Sign Out</a>
     {% else %}
