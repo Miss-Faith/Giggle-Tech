@@ -1,14 +1,14 @@
 {% load static %}
-<nav class="navbar">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar bg-dark">
   <div class="container-fluid">
     {% if user.is_authenticated %}
-      <a class="navbar-brand"><img class="rounded" src="" alt="Profile" style="max-width: 5rem; max-height: 3rem;"></a>
-      <a href="/" class="navbar-brand">Giggle</a>
-      <a href="/" class="navbar-item">Sign Out</a>
+      <a class="navbar-brand"><img class="rounded" href="{% url 'profile' user.username %}" src="" alt="Profile" style="max-width: 5rem; max-height: 3rem;"></a>
+      <a href="{% url 'index' %}" class="navbar-brand">Giggle</a>
+      <a href="{% url 'logout' %}" class="navbar-item">Sign Out</a>
     {% else %}
-      <a class="navbar-brand" href="/"><img class="rounded" src="{% static 'images/noimage.jpg'%}" alt="picture" style="max-width: 5rem; max-height: 3rem;"></a>
+      <a class="navbar-brand"><img class="rounded" src="{% static 'images/noimage.jpg'%}" alt="picture" style="max-width: 5rem; max-height: 3rem;"></a>
       <a href="/" class="navbar-brand">Giggle</a>
-      <a href="/" class="navbar-item">Sign In</a>
+      <a href="{% url 'login' %}" class="navbar-item">Sign In</a>
     {% endif %}
 
   </div>

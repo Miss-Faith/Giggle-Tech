@@ -3,8 +3,9 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<br>
 <div class="row no-gutters d-flex justify-content-center">
-  <div class="col-10 card bg-dark text-white main-card text-center">
+  <div class="col-12 card bg-dark text-white main-card text-center">
     <img class="main-image"  src="{{ random_post.image.url }}" class="card-img" alt="Random">
     <div class="card-img-overlay">
       <div data-model="{&quot;likes&quot;:55,&quot;id&quot;:38186,&quot;images&quot;:{&quot;thumbnail&quot;:&quot;submissions\/2019\/10\/5da42f4e8967d075754281.jpg&quot;},&quot;slug&quot;:&quot;laguta-laguta&quot;,&quot;title&quot;:&quot;Laguta &amp; Laguta&quot;,&quot;createdAt&quot;:1571616000,&quot;tags&quot;:[&quot;Design Agencies&quot;,&quot;Mobile &amp; Apps&quot;,&quot;Web &amp; Interactive&quot;,&quot;Flat Design&quot;,&quot;Minimal&quot;,&quot;Portfolio&quot;,&quot;Responsive Design&quot;,&quot;Black&quot;,&quot;Red&quot;,&quot;White&quot;,&quot;Gallery&quot;,&quot;GSAP Animation&quot;,&quot;UI design&quot;,&quot;Nuxt.js&quot;],&quot;type&quot;:&quot;submission&quot;}">      
@@ -67,13 +68,15 @@
 
 <div class=" border text-center container-fluid banner bg-dark">
   <br><br><br>
-  <form class="form mr-sm-2" action='/search' role="search">
-    <input class="form-control mr-2 text-center" type="search" placeholder="Search for a project" name="imagesearch" aria-label="Search">
+  <form class="form mr-sm-2" method="get" action="{% url 'search' %}" role="search">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2 text-center" type="search" placeholder="Search for a project" name="title" aria-label="Search">
     <br>
     <button class="form-button text-center btn btn-info btn-md my-2 my-sm-0" type="submit">Search</button>
   </form>
-  <br>
-  <a class="form-button text-center btn btn-info btn-md my-2 my-sm-0"  href="">Submit a Project</a>
+
+   <br>
+  <button class="form-button text-center btn btn-info btn-md my-2 my-sm-0" id="site" data-toggle="modal" data-target=".bd-example-modal-xl">Submit a Project</butoon>
 </div>
 
 
@@ -91,11 +94,10 @@
             </button>
           </div>
           <div class="modal-body">
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data" role="form">
               {% csrf_token %}
               {{ form|crispy }}
-              <input type="submit" class="btn btn-sm btn-info" value="Save"/>
-              <button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">Close</button>
+              <button type="submit" name="action" class="btn btn-sm btn-info">Save</button>
             </form>
           </div>
         </div>

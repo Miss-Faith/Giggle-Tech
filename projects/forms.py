@@ -53,13 +53,10 @@ class SignupForm(forms.ModelForm):
     return self.cleaned_data
 
 class NewPostForm(forms.ModelForm):
-  name = forms.CharField(label='',widget=forms.TextInput(attrs={'placeholder': 'Project Name','class': 'input is-medium'}), required=True)
-  image = CloudinaryField('image')
-  description = forms.CharField(label='',widget=forms.Textarea(attrs={'placeholder': 'Share Description','class': 'input is-medium'}), required=True)
 
   class Meta:
     model = Post
-    fields = ('name', 'image', 'description')
+    fields = '__all__'
 
 class RatingsForm(forms.ModelForm):
     class Meta:

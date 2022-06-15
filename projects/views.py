@@ -12,7 +12,7 @@ from .serializer import *
 # Create your views here.
 def index(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = NewPostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
@@ -49,11 +49,10 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            form.save()
             username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            User.objects.create_user(username=username, email=email, password=password)
             return redirect('index')
     else:
         form = SignupForm()
