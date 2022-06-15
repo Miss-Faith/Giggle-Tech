@@ -53,7 +53,7 @@ def signup(request):
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
             User.objects.create_user(username=username, email=email, password=password)
-            return redirect('index')
+            return redirect('login')
     else:
         form = SignupForm()
     return render(request, 'registration/signup.html', {'form': form})
