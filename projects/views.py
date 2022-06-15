@@ -11,9 +11,16 @@ from .serializer import *
 
 # Create your views here.
 def index(request):
+    user = request.user
     if request.method == "POST":
-        form = NewPostForm(request.POST)
+        form = NewPostForm(request.POST, request.FILES)
         if form.is_valid():
+            title = form.cleaned_data.get('title')
+            image = request.FILES.get('image')
+            description = form.cleaned_data.get('description')
+            technologies = form.cleaned_data.get('technologies')
+            url = form.cleaned_data.get('url')
+
             post = form.save(commit=False)
             post.user = request.user
             post.save()

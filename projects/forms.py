@@ -53,10 +53,15 @@ class SignupForm(forms.ModelForm):
     return self.cleaned_data
 
 class NewPostForm(forms.ModelForm):
+  title = forms.CharField(label='',widget=forms.TextInput(attrs={'placeholder': 'Project Name','class': 'input is-medium'}), required=True)
+  image = forms.FileField(label='',widget=forms.ClearableFileInput(attrs={'placeholder': 'Image','class': 'textarea','multiple': False}), required=True)
+  description = forms.CharField(label='',widget=forms.Textarea(attrs={'placeholder': 'Project Description','class': 'input is-medium'}), required=True)
+  technologies = forms.CharField(label='',widget=forms.TextInput(attrs={'placeholder': 'Technologies used','class': 'input is-medium'}), required=True)
+  url = forms.URLField(label='',widget=forms.TextInput(attrs={'placeholder': 'Github Url','class': 'input is-medium'}), required=True)
 
   class Meta:
     model = Post
-    fields = '__all__'
+    fields = ('title', 'image', 'description', 'technologies', 'url')
 
 class RatingsForm(forms.ModelForm):
     class Meta:
