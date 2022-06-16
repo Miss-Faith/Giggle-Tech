@@ -110,7 +110,7 @@
           <div>
             <img style="height: 300px;" class="card-img-top" src="{{ post.image.url }}" alt="{{post.title}}">
           </div>
-          <div class="card-body text-center">
+          <div class="card-body">
             <h4 class="card-title text-center"><a href="{% url 'project' post.title %}">{{post.title|title}}</a></h4>
             {% for rating in post.ratings.all %}
             {% if forloop.counter is post.ratings.all.count %}
@@ -132,10 +132,13 @@
             </div>
             {% endif %}
             {% endfor %}
-            <p>{{post.description | truncatechars:100}}</p>
+            <div class="text-center">
+              <p>{{post.description | truncatechars:100}}</p>
               <a class="btn btn-sm btn-outline-info" href="{% url 'project' post.id %}">Project details</a>
+            </div>
             <hr>
             <p class="card-text ">
+              <img class="rounded" src="{{post.user.profile.picture.url}}" class="nav-img mr-2" alt="picture" style="max-width: 5rem; height: 3rem;">
               By {{post.user.username|title}} 
               <span style="float:right">{{post.posted|date}}</span>
             </p>
