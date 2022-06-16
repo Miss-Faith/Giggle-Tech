@@ -1,3 +1,6 @@
+a {
+  color: darkmagenta!important;
+}
 .navbar-custom  {
   height: 3.2rem;
 }
@@ -18,4 +21,8 @@
 
 .card1{
   margin: 104%;
+}
+
+.rating {
+  background-color: rgba(0,0,0,0.4);
 }

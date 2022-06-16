@@ -25,9 +25,10 @@
         </div>
         {% endif %}
     <div class="row">
+        <h3 class="text-center" style="color: darkmagenta;">Projects</h3>
         {% for post in posts %}
         <div class="col-lg-4 col-md-6 col-sm-10">
-            <div class="card" style="margin: 1rem;">
+            <div class="card bg-light" style="margin-bottom: 2rem;">
               <div>
                 <img style="height: 300px;" class="card-img-top" src="{{ post.image.url }}" alt="{{post.title}}">
               </div>
