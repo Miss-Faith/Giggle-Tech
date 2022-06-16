@@ -97,17 +97,15 @@ def user_profile(request, username):
 def edit_profile(request, username):
     user = User.objects.get(username=username)
     if request.method == 'POST':
-        user_form = UpdateUserForm(request.POST, instance=request.user)
         prof_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        if user_form.is_valid() and prof_form.is_valid():
-            user_form.save()
+        if prof_form.is_valid():
             prof_form.save()
-            return redirect('profile', user.username)
+            return redirect('profile')
+    
     else:
-        user_form = UpdateUserForm(instance=request.user)
         prof_form = UpdateUserProfileForm(instance=request.user.profile)
+    
     params = {
-        'user_form': user_form,
         'prof_form': prof_form
     }
     return render(request, 'edit.html', params)

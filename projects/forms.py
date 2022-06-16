@@ -32,7 +32,6 @@ class SignupForm(forms.ModelForm):
   confirm_password = forms.CharField(label='',widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}), required=True)
 
   class Meta:
-
     model = User
     fields = ('username', 'email', 'password')
 
@@ -63,7 +62,13 @@ class NewPostForm(forms.ModelForm):
     model = Post
     fields = ('title', 'image', 'description', 'technologies', 'url')
 
+
+class UpdateUserProfileForm(forms.ModelForm):
+  class Meta:
+    model = Profile
+    fields = ['firstname', 'lastname', 'picture', 'bio']
+
 class RatingsForm(forms.ModelForm):
-    class Meta:
-        model = Rating
-        fields = ['design', 'usability', 'content']
+  class Meta:
+    model = Rating
+    fields = ['design', 'usability', 'content']
