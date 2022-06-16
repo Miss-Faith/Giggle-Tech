@@ -3,9 +3,10 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="row no-gutters d-flex justify-content-center">
+<br><br>
+<div class="row no-gutters d-flex justify-content-center" style="margin-top: 2.5%;">
   <div class="col-11 card bg-dark text-white main-card text-center">
-    <img class="main-image cover"  src="{{ random_post.image.url }}" class="card-img" alt="Random">
+    <img class="main-image cover"  src="{{ random_post.image.url }}" class="card-img" alt="Random" style="height: 500px;">
     <div class="card-img-overlay">
       <div data-model="{&quot;likes&quot;:55,&quot;id&quot;:38186,&quot;images&quot;:{&quot;thumbnail&quot;:&quot;submissions\/2019\/10\/5da42f4e8967d075754281.jpg&quot;},&quot;slug&quot;:&quot;laguta-laguta&quot;,&quot;title&quot;:&quot;Laguta &amp; Laguta&quot;,&quot;createdAt&quot;:1571616000,&quot;tags&quot;:[&quot;Design Agencies&quot;,&quot;Mobile &amp; Apps&quot;,&quot;Web &amp; Interactive&quot;,&quot;Flat Design&quot;,&quot;Minimal&quot;,&quot;Portfolio&quot;,&quot;Responsive Design&quot;,&quot;Black&quot;,&quot;Red&quot;,&quot;White&quot;,&quot;Gallery&quot;,&quot;GSAP Animation&quot;,&quot;UI design&quot;,&quot;Nuxt.js&quot;],&quot;type&quot;:&quot;submission&quot;}">      
         <div>
@@ -65,17 +66,15 @@
 </div>
 <br><br>
 
-<div class=" border text-center container-fluid banner bg-dark">
-  <br><br><br>
+<div class="border text-center container-fluid banner bg-dark">
+  <br><br><br><br><br>
   <form class="form mr-sm-2" method="get" action="{% url 'search' %}" role="search">
     {% csrf_token %}
-    <input class="form-control mr-sm-2 text-center" type="search" placeholder="Search for a project" name="title" aria-label="Search">
-    <br>
-    <button class="form-button text-center btn btn-info btn-md my-2 my-sm-0" type="submit">Search</button>
+    <input class="form-control text-center" type="search" placeholder="Search for a project" name="title" aria-label="Search">
+    <button class="form-button text-center btn btn-info btn-md" type="submit" style="margin-top: 1%; margin-bottom: 2%;">Search</button>
   </form>
 
-   <br>
-  <button class="form-button text-center btn btn-info btn-md my-2 my-sm-0" id="site" data-toggle="modal" data-target=".bd-example-modal-xl">Submit a Project</butoon>
+  <button class="form-button text-center btn btn-info btn-md" data-toggle="modal" data-target=".bd-example-modal-xl">Submit a Project</butoon>
 </div>
 
 
@@ -102,42 +101,45 @@
     </div>
   </div>
   {% endif %}
+
   <div class="row no-gutters">
     {% if posts %}
       {% for post in posts %}
-      <div class="col-lg-4 col-md-6 col-sm-10 card" style="margin-bottom: 1rem;">
-        <h4 class="card-title text-center"><a href="{% url 'project' post.title %}">{{post.title|title}}</a></h4>
-        <div>
-          <img style="height: 300px;" class="card-img-top" src="{{ post.image.url }}" alt="{{post.title}}">
-        </div>
-        <div class="card-body">
-          {% for rating in post.ratings.all %}
-          {% if forloop.counter is post.ratings.all.count %}
-          <div class="row d-flex justify-content-center">
-            <div style="height: 3rem;" class="col-3 border rounded-pill text-center">
-              <small><strong><p style="margin-top: 0.4rem;">Design</p></strong></small>
-              <small><p style="margin-top: -1rem;" class="d-block mx-auto textrate">{{rating.design_average}}</p></small>
-            </div>
-
-            <div style="height: 3rem; margin-left: 0.5rem; margin-right: 0.5rem;" class="col-3 border rounded-pill text-center">
-              <small><strong><p style="margin-top: 0.4rem;">Usability</p></strong></small>
-              <small><p style="margin-top: -1rem;" class="d-block mx-auto textrate">{{rating.usability_average}}</p></small>
-            </div>
-
-            <div style="height: 3rem;" class="col-3 border rounded-pill text-center">
-              <small><strong><p style="margin-top: 0.4rem;">Content</p></strong></small>
-              <small><p style="margin-top: -1rem;" class="d-block mx-auto textrate">{{rating.content_average}}</p></small>
-            </div>
+      <div class="col-lg-4 col-md-6 col-sm-10">
+        <div class="card" style="margin: 1rem;">
+          <div>
+            <img style="height: 300px;" class="card-img-top" src="{{ post.image.url }}" alt="{{post.title}}">
           </div>
-          {% endif %}
-          {% endfor %}
-          <p>{{post.description}}</p>
-            <a class="btn btn-sm btn-outline-info" href="{% url 'project' post.id %}">Project details</a>
-          <hr>
-          <p class="card-text ">
-            By {{post.user.username|title}} 
-            <span style="float:right">{{post.posted|date}}</span>
-          </p>
+          <div class="card-body text-center">
+            <h4 class="card-title text-center"><a href="{% url 'project' post.title %}">{{post.title|title}}</a></h4>
+            {% for rating in post.ratings.all %}
+            {% if forloop.counter is post.ratings.all.count %}
+            <div class="row d-flex justify-content-center">
+              <div style="height: 3rem;" class="col-3 border rounded-pill text-center">
+                <small><strong><p style="margin-top: 0.4rem;">Design</p></strong></small>
+                <small><p style="margin-top: -1rem;" class="d-block mx-auto textrate">{{rating.design_average}}</p></small>
+              </div>
+  
+              <div style="height: 3rem; margin-left: 0.5rem; margin-right: 0.5rem;" class="col-3 border rounded-pill text-center">
+                <small><strong><p style="margin-top: 0.4rem;">Usability</p></strong></small>
+                <small><p style="margin-top: -1rem;" class="d-block mx-auto textrate">{{rating.usability_average}}</p></small>
+              </div>
+  
+              <div style="height: 3rem;" class="col-3 border rounded-pill text-center">
+                <small><strong><p style="margin-top: 0.4rem;">Content</p></strong></small>
+                <small><p style="margin-top: -1rem;" class="d-block mx-auto textrate">{{rating.content_average}}</p></small>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            <p>{{post.description | truncatechars:100}}</p>
+              <a class="btn btn-sm btn-outline-info" href="{% url 'project' post.id %}">Project details</a>
+            <hr>
+            <p class="card-text ">
+              By {{post.user.username|title}} 
+              <span style="float:right">{{post.posted|date}}</span>
+            </p>
+          </div>
         </div>
       </div>
       {% endfor %}

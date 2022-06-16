@@ -1,19 +1,19 @@
 {% load static %}
-<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar bg-dark">
+<nav class="navbar-custom navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar bg-dark">
   <div class="container-fluid">
     {% if user.is_authenticated %}
       {% if user.profile.picture.url %}
-        <a class="navbar-brand"><img class="rounded" href="{% url 'profile' user.username %}" src="{{ user.profile.picture.url }}" alt="Profile" style="max-width: 5rem; max-height: 3rem;"></a>
-        <span class="text-white" style="margin-left: -36%;">{{ user.profile.user.username }}</span>
+        <a class="navbar-brand" href="{% url 'profile' user.username %}"><img class="rounded cover" src="{{ user.profile.picture.url }}" alt="Profile" style="max-width: 4rem; max-height: 2.8rem;"></a>
+        <span class="text-white">{{ user.profile.user.username }}</span>
       {% else %}
-        <a class="navbar-brand"><img class="rounded" href="{% url 'profile' user.username %}" src="{% static 'images/noimage.jpg'%}" alt="picture" style="max-width: 5rem; max-height: 3rem;"></a>
-        <span class="text-white" style="margin-left: -36%;">{{ user.profile.user.username }}</span>
+        <a class="navbar-brand" href="{% url 'profile' user.username %}" ><img class="rounded cover" src="{% static 'images/noimage.jpg'%}" alt="picture" style="max-width: 4rem; max-height: 2.8rem;"></a>
+        <span class="text-white">{{ user.profile.user.username }}</span>
       {% endif %}
       <a href="{% url 'index' %}" class="navbar-brand">Giggle</a>
       <a href="{% url 'logout' %}" class="navbar-item">Sign Out</a>
     {% else %}
-      <a class="navbar-brand"><img class="rounded" src="{% static 'images/noimage.jpg'%}" alt="picture" style="max-width: 5rem; max-height: 3rem;"></a>
-      <a href="/" class="navbar-brand">Giggle</a>
+      <a class="navbar-brand"><img class="rounded cover" src="{% static 'images/noimage.jpg'%}" alt="picture" style="max-width: 5rem; max-height: 2.8rem;"></a>
+      <a href="{% url 'index' %}" class="navbar-brand">Giggle</a>
       <a href="{% url 'login' %}" class="navbar-item">Sign In</a>
     {% endif %}
 

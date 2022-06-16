@@ -1,13 +1,9 @@
-.navbar-brand {
-  margin-left: 2%;
+.navbar-custom  {
+  height: 3.2rem;
 }
 
 .body-main {
   background-color: bisque;
-}
-
-.navbar-item {
-  margin-right: 2%;
 }
 
 .banner{
@@ -20,10 +16,6 @@
   background-image:url('/static/images/image1 (2).jpg');
 }
 
-.main-image {
-  height: 500px;
-}
-
-.rating {
-  width: 80%;
+.card1{
+  margin: 104%;
 }

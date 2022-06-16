@@ -24,7 +24,7 @@ def index(request):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
-        return HttpResponseRedirect('')
+        return HttpResponseRedirect('/')
     else:
         form = NewPostForm()
 
