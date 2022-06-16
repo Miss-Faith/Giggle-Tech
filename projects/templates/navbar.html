@@ -3,10 +3,10 @@
   <div class="container-fluid">
     {% if user.is_authenticated %}
       {% if user.profile.picture.url %}
-        <a class="navbar-brand" href="{% url 'profile' user.username %}"><img class="rounded cover" src="{{ user.profile.picture.url }}" alt="Profile" style="max-width: 4rem; max-height: 2.8rem;"></a>
+        <a class="navbar-brand" href="{% url 'profile' %}"><img class="rounded cover" src="{{ user.profile.picture.url }}" alt="Profile" style="max-width: 4rem; max-height: 2.8rem;"></a>
         <span class="text-white">{{ user.profile.user.username }}</span>
       {% else %}
-        <a class="navbar-brand" href="{% url 'profile' user.username %}" ><img class="rounded cover" src="{% static 'images/noimage.jpg'%}" alt="picture" style="max-width: 4rem; max-height: 2.8rem;"></a>
+        <a class="navbar-brand" href="{% url 'profile' %}" ><img class="rounded cover" src="{% static 'images/noimage.jpg'%}" alt="picture" style="max-width: 4rem; max-height: 2.8rem;"></a>
         <span class="text-white">{{ user.profile.user.username }}</span>
       {% endif %}
       <a href="{% url 'index' %}" class="navbar-brand">Giggle</a>

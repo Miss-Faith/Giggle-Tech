@@ -68,16 +68,27 @@ def signup(request):
 
 
 @login_required()
-def profile(request, username):
-    return render(request, 'profile.html')
+def profile(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+  
+    posts = Post.objects.filter(user=user).order_by('-posted')
+
+    context = {
+    'posts': posts,
+    'profile':profile,
+  }
+    return render(request, 'profile.html', context)
 
 
 def user_profile(request, username):
-    user_prof = get_object_or_404(User, username=username)
-    if request.user == user_prof:
-        return redirect('profile', username=request.user.username)
+    user = User.objects.get(username=username)
+    profile = Profile.objects.get(user=user)
+    posts = Post.objects.filter(user=user).order_by('-posted')
+    
     params = {
-        'user_prof': user_prof,
+        'profile': profile,
+        'posts': posts,
     }
     return render(request, 'profile.html', params)
 

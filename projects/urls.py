@@ -15,7 +15,7 @@ urlpatterns = [
   path('api/', include(router.urls)),
   path('<username>/profile', user_profile, name='userprofile'),
   path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-  path('profile/<username>/', profile, name='profile'),
+  path('profile/', profile, name='profile'),
   path('profile/<username>/settings', edit_profile, name='edit'),
   path('search/', search_project, name='search'),
 ]
