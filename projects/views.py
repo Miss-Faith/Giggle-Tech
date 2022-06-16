@@ -24,6 +24,7 @@ def index(request):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
+        return HttpResponseRedirect('')
     else:
         form = NewPostForm()
 
@@ -102,9 +103,9 @@ def edit_profile(request, username):
 
 
 @login_required(login_url='login')
-def project(request, post):
-    post = Post.objects.get(title=post)
-    ratings = Rating.objects.filter(user=request.user, post=post).first()
+def project(request, post_id):
+    post = Post.objects.get(id=post_id)
+    ratings = Rating.objects.filter(user=request.user, post_id=post_id).first()
     rating_status = None
     if ratings is None:
         rating_status = False
@@ -117,7 +118,7 @@ def project(request, post):
             rate.user = request.user
             rate.post = post
             rate.save()
-            post_ratings = Rating.objects.filter(post=post)
+            post_ratings = Rating.objects.filter(post_id=post_id)
 
             design_ratings = [d.design for d in post_ratings]
             design_average = sum(design_ratings) / len(design_ratings)
