@@ -11,6 +11,10 @@ python-decouple = "*"
 django-crispy-forms = "*"
 djangorestframework = "*"
 pillow = "*"
+gunicorn = "*"
+whitenoise = "*"
+django-heroku = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
