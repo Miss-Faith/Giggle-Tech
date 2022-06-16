@@ -37,9 +37,7 @@ MODE=config("MODE", default="dev")
 SECRET_KEY = config('SECRET_KEY')
 
 cloudinary.config( 
-  cloud_name = "dlrnjcn1a", 
-  api_key = "968178658477246", 
-  api_secret = "AgXPLg-tkuLFq6YxH6I_n66_S64"
+  
 )
 
 # Application definition
